@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader';
 import Box from '@material-ui/core/Box';
@@ -81,6 +82,12 @@ function App() {
       </Loader>
       <Interviews interviews={interviews} performInterview={performInterview} />
       <OfferSummary interviews={interviews} />
+      <Box>
+        <p>
+          View{' '}
+          <a href="https://github.com/scotteratigan/interviews">Source Code</a>
+        </p>
+      </Box>
     </Box>
   );
 }
