@@ -7,6 +7,10 @@ const props = {
   locations: [],
   availableTransport: [],
   addInterview: jest.fn(),
+  location: '',
+  setLocation: jest.fn(),
+  transport: '',
+  setTransport: jest.fn(),
 };
 
 describe('<InterviewSelections>', () => {

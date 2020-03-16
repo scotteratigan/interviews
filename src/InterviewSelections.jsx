@@ -7,9 +7,11 @@ export default function SelectInterview({
   locations,
   availableTransport,
   addInterview,
+  location,
+  setLocation,
+  transport,
+  setTransport,
 }) {
-  const [location, setLocation] = useState('');
-  const [transport, setTransport] = useState('');
   const [locationDistance, setLocationDistance] = useState(0);
 
   function calculateDistance(val) {
@@ -73,4 +75,8 @@ SelectInterview.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   availableTransport: PropTypes.arrayOf(PropTypes.object).isRequired,
   addInterview: PropTypes.func.isRequired,
+  location: PropTypes.string.isRequired, // currently selected location
+  setLocation: PropTypes.func.isRequired,
+  transport: PropTypes.string.isRequired, // currently selected transportation name (car)
+  setTransport: PropTypes.func.isRequired,
 };
