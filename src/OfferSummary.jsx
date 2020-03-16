@@ -22,7 +22,9 @@ export default function OfferSummary({ interviews }) {
           Job Offer
           {jobOffers.length > 1 ? 's' : ''}
         </h3>
-        <p>{jobOffers.map((offer) => offer.location).join(', ')}</p>
+        <p style={{ fontSize: '3rem' }}>
+          {jobOffers.map((offer) => offer.location).join(', ')}
+        </p>
         <Confetti />
       </Box>
     );

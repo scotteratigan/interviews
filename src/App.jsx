@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader';
@@ -54,41 +55,47 @@ function App() {
   };
 
   return (
-    <Box className="App" m={1} maxWidth={680}>
-      <Box component="section" m={2}>
-        <h1>Interviews Planner</h1>
-        {interviews.length < MAX_INTERVIEWS && (
-          <Box m={3}>
-            <p>
-              Great work lining up 6 interviews. However, you only have the time
-              to attend 4 interviews. Please plan your interviews below. After
-              you interview at all 4 locations, you will receive the results.
-            </p>
-          </Box>
-        )}
-      </Box>
-      <Loader loaded={!loading}>
-        {interviews.length < MAX_INTERVIEWS && (
-          <InterviewSelections
-            locations={locationData}
-            availableTransport={transportData}
-            addInterview={addInterview}
-            location={location}
-            setLocation={setLocation}
-            transport={transport}
-            setTransport={setTransport}
+    <>
+      <Box className="App" m={1} maxWidth={680} display="flex">
+        <Box component="section" m={2}>
+          <h1>Interviews Planner</h1>
+          {interviews.length < MAX_INTERVIEWS && (
+            <Box m={3}>
+              <p>
+                Great work lining up 6 interviews! However, you only have the
+                time to attend 4 interviews. Please plan your interviews below.
+                After you interview at all 4 locations, you will receive the
+                results. Good luck.
+              </p>
+            </Box>
+          )}
+          <Loader loaded={!loading}>
+            {interviews.length < MAX_INTERVIEWS && (
+              <InterviewSelections
+                locations={locationData}
+                availableTransport={transportData}
+                addInterview={addInterview}
+                location={location}
+                setLocation={setLocation}
+                transport={transport}
+                setTransport={setTransport}
+              />
+            )}
+          </Loader>
+          <Interviews
+            interviews={interviews}
+            performInterview={performInterview}
           />
-        )}
-      </Loader>
-      <Interviews interviews={interviews} performInterview={performInterview} />
-      <OfferSummary interviews={interviews} />
-      <Box>
+          <OfferSummary interviews={interviews} />
+        </Box>
+      </Box>
+      <div style={{ flexShrink: 0 }}>
         <p>
           View{' '}
           <a href="https://github.com/scotteratigan/interviews">Source Code</a>
         </p>
-      </Box>
-    </Box>
+      </div>
+    </>
   );
 }
 
