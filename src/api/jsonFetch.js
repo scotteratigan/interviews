@@ -6,6 +6,7 @@ import data from '../data.json';
 // speed is in miles per hour
 
 const MAX_INTERVIEWS = 4;
+const MIN_SCORE_TO_LAND_JOB = 0.75;
 
 let { transportData } = data;
 let { locationData } = data;
@@ -83,6 +84,10 @@ function scheduleInterview({ location, transport }) {
   };
 }
 
+function checkForJobOffer() {
+  return Math.random() > MIN_SCORE_TO_LAND_JOB;
+}
+
 function performInterview({ location }) {
   // Ensure interview is scheduled;
   const requestedInterview = interviews.find(
@@ -106,7 +111,7 @@ function performInterview({ location }) {
 
   const updatedInterviews = [...interviews].map((interview) => {
     if (interview !== requestedInterview) return interview;
-    return { ...interview, applied: true, offeredJob: true };
+    return { ...interview, applied: true, offeredJob: checkForJobOffer() };
   });
 
   interviews = updatedInterviews;
