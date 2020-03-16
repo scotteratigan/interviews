@@ -1,14 +1,26 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
 export default function Interviews({ interviews, performInterview }) {
+  const classes = useStyles();
   if (interviews.length === 0) {
-    return (
-      <div>
-        <h2>Interviews Scheduled</h2>
-        <p>No interviews scheduled yet.</p>
-      </div>
-    );
+    return null;
   }
   const totals = interviews.reduce(
     (total, current) => ({
@@ -20,53 +32,57 @@ export default function Interviews({ interviews, performInterview }) {
 
   return (
     <section>
-      <h2>Interviews Scheduled</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Location</td>
-            <td>Travel Method</td>
-            <td>Distance</td>
-            <td>Travel Time (hours)</td>
-            <td />
-          </tr>
-        </thead>
-        <tbody>
-          {interviews.map(
-            ({
-              location,
-              distance,
-              transport,
-              travelHours,
-              interviewed,
-              // offeredJob,
-            }) => (
-              <tr key={location}>
-                <td>{location}</td>
-                <td>{transport}</td>
-                <td>{distance}</td>
-                <td>{travelHours}</td>
-                <td>
-                  {!interviewed && (
-                    <button
-                      type="button"
-                      onClick={() => performInterview(location)}
-                    >
-                      Interview
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ),
-          )}
-          <tr style={{ backgroundColor: 'grey' }}>
-            <td>Total</td>
-            <td />
-            <td>{totals.distance}</td>
-            <td>{totals.travelHours}</td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Scheduled Interviews</h2>
+      <TableContainer component={Paper}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Location</TableCell>
+              <TableCell>Travel Method</TableCell>
+              <TableCell>Distance</TableCell>
+              <TableCell>Travel Time</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {interviews.map(
+              ({
+                location,
+                distance,
+                transport,
+                travelHours,
+                interviewed,
+                // offeredJob,
+              }) => (
+                <TableRow key={location}>
+                  <TableCell>{location}</TableCell>
+                  <TableCell>{transport}</TableCell>
+                  <TableCell>{distance} mi</TableCell>
+                  <TableCell>{travelHours} hours</TableCell>
+                  <TableCell>
+                    {!interviewed && (
+                      <Button
+                        type="button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => performInterview(location)}
+                      >
+                        Interview
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ),
+            )}
+            <TableRow>
+              <TableCell>Total</TableCell>
+              <TableCell />
+              <TableCell>{totals.distance} mi</TableCell>
+              <TableCell>{totals.travelHours} hours</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </section>
   );
 }

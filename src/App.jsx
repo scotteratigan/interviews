@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader';
+import Box from '@material-ui/core/Box';
 import './App.css';
 import InterviewSelections from './InterviewSelections';
 import Interviews from './Interviews';
@@ -52,10 +53,10 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header>
+    <Box className="App" m={1}>
+      <Box component="section" m={2}>
         <h1>Interviews Planner</h1>
-      </header>
+      </Box>
       <Loader loaded={!loading}>
         {interviews.length < MAX_INTERVIEWS && (
           <InterviewSelections
@@ -71,7 +72,7 @@ function App() {
       </Loader>
       <Interviews interviews={interviews} performInterview={performInterview} />
       <OfferSummary interviews={interviews} />
-    </div>
+    </Box>
   );
 }
 

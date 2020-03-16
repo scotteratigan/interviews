@@ -1,23 +1,27 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Box from '@material-ui/core/Box';
 
 export default function SelectFromList(props) {
   const { label, options, value, onChange } = props;
   return (
-    <label htmlFor={label}>
-      {label}
-      <select
+    <Box m={4}>
+      <InputLabel htmlFor={label}>{label}</InputLabel>
+      <Select
         id={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option value="">&nbsp;</option>
         {options.map((option) => (
-          <option key={option}>{option}</option>
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
         ))}
-      </select>
-    </label>
+      </Select>
+    </Box>
   );
 }
 

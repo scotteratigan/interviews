@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import SelectFromList from './SelectFromList';
 
 export default function SelectInterview({
@@ -46,7 +48,7 @@ export default function SelectInterview({
   }
 
   return (
-    <form>
+    <Box m={3}>
       <SelectFromList
         label="Select interview location"
         options={locations.map(({ city }) => city)}
@@ -62,11 +64,16 @@ export default function SelectInterview({
         />
       )}
       {location && transport && (
-        <button type="button" onClick={submitInterview}>
+        <Button
+          type="button"
+          onClick={submitInterview}
+          variant="contained"
+          color="primary"
+        >
           Confirm Interview
-        </button>
+        </Button>
       )}
-    </form>
+    </Box>
   );
 }
 

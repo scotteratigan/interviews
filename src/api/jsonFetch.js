@@ -6,8 +6,7 @@ import data from '../data.json';
 // speed is in miles per hour
 
 const MAX_INTERVIEWS = 4;
-// const MIN_SCORE_TO_LAND_JOB = 0.75;
-const MIN_SCORE_TO_LAND_JOB = 0.1;
+const MIN_SCORE_TO_LAND_JOB = 0.67;
 
 let { transportData } = data;
 let { locationData } = data;
