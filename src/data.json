@@ -1,0 +1,54 @@
+{
+  "transportData": [
+    {
+      "name": "Car",
+      "unit": 2,
+      "max_distance": 400,
+      "speed": 50
+    },
+    {
+      "name": "Bus",
+      "unit": 1,
+      "max_distance": 600,
+      "speed": 100
+    },
+    {
+      "name": "Train",
+      "unit": 1,
+      "max_distance": 800,
+      "speed": 200
+    },
+    {
+      "name": "Plane",
+      "unit": 2,
+      "max_distance": 1200,
+      "speed": 400
+    }
+  ],
+  "locationData": [
+    {
+      "city": "San Francisco",
+      "distance": 200
+    },
+    {
+      "city": "Sacramento",
+      "distance": 400
+    },
+    {
+      "city": "Sunnyvale",
+      "distance": 600
+    },
+    {
+      "city": "Mountain View",
+      "distance": 800
+    },
+    {
+      "city": "Santa Clara",
+      "distance": 1000
+    },
+    {
+      "city": "Cupertino",
+      "distance": 1200
+    }
+  ]
+}
