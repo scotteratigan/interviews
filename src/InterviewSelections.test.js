@@ -6,6 +6,7 @@ import InterviewSelections from './InterviewSelections';
 const props = {
   locations: [],
   availableTransport: [],
+  addInterview: jest.fn(),
 };
 
 describe('<InterviewSelections>', () => {

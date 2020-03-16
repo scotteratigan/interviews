@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SelectFromList from './SelectFromList';
 
-export default function SelectInterview({ locations, availableTransport }) {
+export default function SelectInterview({
+  locations,
+  availableTransport,
+  addInterview,
+}) {
   const [location, setLocation] = useState('');
   const [transport, setTransport] = useState('');
   const [locationDistance, setLocationDistance] = useState(0);
@@ -49,7 +53,9 @@ export default function SelectInterview({ locations, availableTransport }) {
         />
       )}
       {location && transport && (
-        <button type="button">Confirm Interview</button>
+        <button type="button" onClick={() => addInterview(location, transport)}>
+          Confirm Interview
+        </button>
       )}
     </form>
   );
@@ -58,4 +64,5 @@ export default function SelectInterview({ locations, availableTransport }) {
 SelectInterview.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   availableTransport: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addInterview: PropTypes.func.isRequired,
 };
