@@ -2,11 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
-describe('app', () => {
-  it('component renders', () => {
+describe('<App>', () => {
+  it('renders', () => {
     expect.assertions(1);
     const { getByText } = render(<App />);
-    const linkElement = getByText(/interviews planner/i);
-    expect(linkElement).toBeInTheDocument();
+    const testElm = getByText(/interviews planner/i);
+    expect(testElm).toBeInTheDocument();
   });
 });

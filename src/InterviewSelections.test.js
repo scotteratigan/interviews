@@ -8,11 +8,11 @@ const props = {
   availableTransport: [],
 };
 
-describe('interviewSelections', () => {
-  it('component renders', () => {
+describe('<InterviewSelections>', () => {
+  it('renders', () => {
     expect.assertions(1);
     const { getByText } = render(<InterviewSelections {...props} />);
-    const linkElement = getByText(/select interview location/i);
-    expect(linkElement).toBeInTheDocument();
+    const testElm = getByText(/select interview location/i);
+    expect(testElm).toBeInTheDocument();
   });
 });
