@@ -6,15 +6,22 @@ import data from '../data.json';
 // speed is in miles per hour
 
 let { transportData } = data;
-const { locationData } = data;
+let { locationData } = data;
 
 const interviews = [];
 
 function scheduleInterview({ location, distance, transport }) {
-  transportData = [...transportData].map((transportOption) => {
-    if (transportOption.name !== transport) return transportOption;
-    return { ...transport, unit: transport.unit - 1 };
-  });
+  // mutates transportData, locationData, and interviews
+  // remove location from array:
+  locationData = locationData.filter((option) => option.city !== location);
+  // update units for transport:
+  transportData = [...transportData]
+    .map((transportOption) => {
+      if (transportOption.name !== transport) return transportOption;
+      return { ...transportOption, unit: transportOption.unit - 1 };
+    })
+    .filter((option) => option.unit > 0);
+  // update interview list:
   interviews.push({ location, distance, transport });
   return interviews;
 }

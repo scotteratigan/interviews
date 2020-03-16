@@ -14,7 +14,7 @@ function App() {
   const [location, setLocation] = useState('');
   const [transport, setTransport] = useState('');
 
-  const fetchAllData = async () => {
+  const fetchCurrentData = async () => {
     const initialDataFetches = [
       jsonFetch('/api/transportation').then((res) => setTransportData(res)),
       jsonFetch('/api/locations').then((res) => setLocationData(res)),
@@ -24,19 +24,20 @@ function App() {
   };
 
   useEffect(() => {
-    fetchAllData();
+    fetchCurrentData();
   }, []);
 
   const addInterview = async (newInterview) => {
     setLoading(true);
+    setLocation('');
+    setTransport('');
     const res = await jsonFetch('/api/interview', {
       method: 'POST',
       body: newInterview,
     });
     setInterviews([...res]);
-    setLocation('');
-    setTransport('');
-    setLoading(false);
+    // Assuming confired, get upated transport & location data
+    fetchCurrentData();
   };
   return (
     <div className="App">
