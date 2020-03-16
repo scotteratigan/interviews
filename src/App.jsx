@@ -3,6 +3,7 @@ import Loader from 'react-loader';
 import './App.css';
 import InterviewSelections from './InterviewSelections';
 import Interviews from './Interviews';
+import OfferSummary from './OfferSummary';
 import jsonFetch from './api/jsonFetch';
 
 const MAX_INTERVIEWS = 4;
@@ -12,7 +13,6 @@ function App() {
   const [interviews, setInterviews] = useState([]);
   const [transportData, setTransportData] = useState([]);
   const [locationData, setLocationData] = useState([]);
-  // for each selection...
   const [location, setLocation] = useState('');
   const [transport, setTransport] = useState('');
 
@@ -53,7 +53,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Interviews Planner</h1>
+      <header>
+        <h1>Interviews Planner</h1>
+      </header>
       <Loader loaded={!loading}>
         {interviews.length < MAX_INTERVIEWS && (
           <InterviewSelections
@@ -66,12 +68,9 @@ function App() {
             setTransport={setTransport}
           />
         )}
-
-        <Interviews
-          interviews={interviews}
-          performInterview={performInterview}
-        />
       </Loader>
+      <Interviews interviews={interviews} performInterview={performInterview} />
+      <OfferSummary interviews={interviews} />
     </div>
   );
 }

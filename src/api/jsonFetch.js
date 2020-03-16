@@ -6,7 +6,8 @@ import data from '../data.json';
 // speed is in miles per hour
 
 const MAX_INTERVIEWS = 4;
-const MIN_SCORE_TO_LAND_JOB = 0.75;
+// const MIN_SCORE_TO_LAND_JOB = 0.75;
+const MIN_SCORE_TO_LAND_JOB = 0.1;
 
 let { transportData } = data;
 let { locationData } = data;
@@ -111,7 +112,7 @@ function performInterview({ location }) {
 
   const updatedInterviews = [...interviews].map((interview) => {
     if (interview !== requestedInterview) return interview;
-    return { ...interview, applied: true, offeredJob: checkForJobOffer() };
+    return { ...interview, interviewed: true, offeredJob: checkForJobOffer() };
   });
 
   interviews = updatedInterviews;
