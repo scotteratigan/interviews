@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
-// import data from "./data.json";
+import SelectInterview from './SelectInterview';
+import data from './data.json';
 
 function App() {
+  const { locationData } = data;
   return (
     <div className="App">
       <h1>Interviews Planner</h1>
-      {/* {JSON.stringify(data)} */}
+      <SelectInterview locations={locationData} />
     </div>
   );
 }
