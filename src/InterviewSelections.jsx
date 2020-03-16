@@ -24,7 +24,7 @@ export default function SelectInterview({
     // when user selects a location, clear transport option to prevent invalid
     setLocation(val);
     setTransport('');
-    calculateDistance(val);
+    if (val) calculateDistance(val);
   }
 
   function filterTransport(distance) {
@@ -41,7 +41,6 @@ export default function SelectInterview({
   function submitInterview() {
     addInterview({
       location,
-      distance: locationDistance,
       transport,
     });
   }

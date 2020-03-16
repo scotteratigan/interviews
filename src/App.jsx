@@ -5,6 +5,8 @@ import InterviewSelections from './InterviewSelections';
 import Interviews from './Interviews';
 import jsonFetch from './api/jsonFetch';
 
+const MAX_INTERVIEWS = 4;
+
 function App() {
   const [loading, setLoading] = useState(false);
   const [interviews, setInterviews] = useState([]);
@@ -31,11 +33,16 @@ function App() {
     setLoading(true);
     setLocation('');
     setTransport('');
-    const res = await jsonFetch('/api/interview', {
+    const res = await jsonFetch('/api/schedule_interview', {
       method: 'POST',
       body: newInterview,
     });
-    setInterviews([...res]);
+    if (res.status === 200) {
+      setInterviews([...res.data]);
+    } else {
+      // Add error msg (toast?)
+    }
+
     // Assuming confired, get upated transport & location data
     fetchCurrentData();
   };
@@ -43,15 +50,18 @@ function App() {
     <div className="App">
       <h1>Interviews Planner</h1>
       <Loader loaded={!loading}>
-        <InterviewSelections
-          locations={locationData}
-          availableTransport={transportData}
-          addInterview={addInterview}
-          location={location}
-          setLocation={setLocation}
-          transport={transport}
-          setTransport={setTransport}
-        />
+        {interviews.length < MAX_INTERVIEWS && (
+          <InterviewSelections
+            locations={locationData}
+            availableTransport={transportData}
+            addInterview={addInterview}
+            location={location}
+            setLocation={setLocation}
+            transport={transport}
+            setTransport={setTransport}
+          />
+        )}
+
         <Interviews interviews={interviews} />
       </Loader>
     </div>
