@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,7 +19,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Interviews({ interviews, performInterview }) {
+export default function Interviews({
+  interviews,
+  performInterview,
+  cancelInterView,
+}) {
   const classes = useStyles();
   if (interviews.length === 0) {
     return null;
@@ -61,14 +67,24 @@ export default function Interviews({ interviews, performInterview }) {
                   <TableCell>{travelHours} hours</TableCell>
                   <TableCell>
                     {!interviewed && (
-                      <Button
-                        type="button"
-                        variant="contained"
-                        color="primary"
-                        onClick={() => performInterview(location)}
-                      >
-                        Interview
-                      </Button>
+                      <>
+                        <Button
+                          type="button"
+                          variant="contained"
+                          color="primary"
+                          onClick={() => performInterview(location)}
+                        >
+                          Interview
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="contained"
+                          color="primary"
+                          onClick={() => cancelInterView(location)}
+                        >
+                          Cancel Interview
+                        </Button>
+                      </>
                     )}
                   </TableCell>
                 </TableRow>
@@ -90,4 +106,5 @@ export default function Interviews({ interviews, performInterview }) {
 Interviews.propTypes = {
   interviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   performInterview: PropTypes.func.isRequired,
+  cancelInterView: PropTypes.func.isRequired,
 };

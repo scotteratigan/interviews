@@ -44,6 +44,16 @@ function App() {
     fetchCurrentData();
   };
 
+  const cancelInterView = async (cancelLocation) => {
+    setLoading(true);
+    const res = await jsonFetch('/api/cancel_interview', {
+      method: 'POST',
+      body: { location: cancelLocation },
+    });
+    setInterviews([...res.data]);
+    fetchCurrentData();
+  };
+
   const performInterview = async (interviewLocation) => {
     setLoading(true);
     const res = await jsonFetch('/api/perform_interview', {
@@ -85,6 +95,7 @@ function App() {
           <Interviews
             interviews={interviews}
             performInterview={performInterview}
+            cancelInterView={cancelInterView}
           />
           <OfferSummary interviews={interviews} />
         </Box>

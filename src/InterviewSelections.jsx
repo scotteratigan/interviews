@@ -55,6 +55,12 @@ export default function SelectInterview({
         value={location}
         onChange={(v) => handleLocationSelect(v)}
       />
+      {!filterTransport(locationDistance).length && (
+        <div>
+          No valid transport available. Do you wish to re-plan your previous
+          selections?
+        </div>
+      )}
       {location && (
         <SelectFromList
           label="Select transport method"

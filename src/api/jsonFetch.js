@@ -60,12 +60,11 @@ function scheduleInterview({ location, transport }) {
   locationData = locationData.filter((option) => option.city !== location);
 
   // update units for transport:
-  transportData = [...transportData]
-    .map((transportOption) => {
-      if (transportOption.name !== transport) return transportOption;
-      return { ...transportOption, unit: transportOption.unit - 1 };
-    })
-    .filter((option) => option.unit > 0);
+  transportData = [...transportData].map((transportOption) => {
+    if (transportOption.name !== transport) return transportOption;
+    return { ...transportOption, unit: transportOption.unit - 1 };
+  });
+  // .filter((option) => option.unit > 0);
 
   // update interview list:
   const { speed } = transportObj;
@@ -86,6 +85,33 @@ function scheduleInterview({ location, transport }) {
 
 function checkForJobOffer() {
   return Math.random() > MIN_SCORE_TO_LAND_JOB;
+}
+
+function cancelInterview({ location: cancelLocationName }) {
+  // const interviewToCancel = interviews.find(
+  //   (interview) => interview.location === cancelLocationName,
+  // );
+  const updatedInterviews = interviews.filter(
+    (interview) => interview.location !== cancelLocationName,
+  );
+  interviews = [...updatedInterviews];
+  transportData.map((transport) => {
+    if (transport.name !== cancelLocationName) return transport;
+    return { ...transport, unit: transport.unit + 1 };
+  });
+
+  const locationToAddBack = data.locationData.find(
+    ({ city }) => city === cancelLocationName,
+  );
+
+  const newLocationData = [...locationData];
+  newLocationData.push(locationToAddBack);
+  locationData = [...newLocationData];
+
+  return {
+    status: 200,
+    data: interviews,
+  };
 }
 
 function performInterview({ location }) {
@@ -139,6 +165,8 @@ function postRouter(route, body = {}) {
   switch (route) {
     case '/api/schedule_interview':
       return scheduleInterview(body);
+    case '/api/cancel_interview':
+      return cancelInterview(body);
     case '/api/perform_interview':
       return performInterview(body);
     default:
