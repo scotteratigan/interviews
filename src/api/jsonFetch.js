@@ -9,12 +9,10 @@ const MAX_INTERVIEWS = 4;
 
 let { transportData } = data;
 let { locationData } = data;
-
-const interviews = [];
+let interviews = [];
 
 function scheduleInterview({ location, transport }) {
-  // mutates transportData, locationData, and interviews
-
+  // mutates all arrays: transportData, locationData, and interviews
   // Ensure location is still available:
   const locationObj = locationData.find((option) => option.city === location);
   if (!locationObj) {
@@ -71,10 +69,50 @@ function scheduleInterview({ location, transport }) {
   // update interview list:
   const { speed } = transportObj;
   const travelHours = distance / speed;
-  interviews.push({ location, distance, transport, travelHours });
+  interviews.push({
+    location,
+    distance,
+    transport,
+    travelHours,
+    interviewed: false,
+    offeredJob: false,
+  });
   return {
     status: 200,
     data: interviews,
+  };
+}
+
+function performInterview({ location }) {
+  // Ensure interview is scheduled;
+  const requestedInterview = interviews.find(
+    (option) => option.location === location,
+  );
+  if (!requestedInterview) {
+    return {
+      error: 'Interview was not scheduled',
+      status: 400,
+      data: interviews,
+    };
+  }
+
+  if (requestedInterview.interviewed) {
+    return {
+      error: 'Already interviewed for this job',
+      status: 400,
+      data: interviews,
+    };
+  }
+
+  const updatedInterviews = [...interviews].map((interview) => {
+    if (interview !== requestedInterview) return interview;
+    return { ...interview, applied: true, offeredJob: true };
+  });
+
+  interviews = updatedInterviews;
+  return {
+    status: 200,
+    data: updatedInterviews,
   };
 }
 
@@ -96,6 +134,8 @@ function postRouter(route, body = {}) {
   switch (route) {
     case '/api/schedule_interview':
       return scheduleInterview(body);
+    case '/api/perform_interview':
+      return performInterview(body);
     default:
       return {
         error: 'Post route not found',
@@ -105,6 +145,7 @@ function postRouter(route, body = {}) {
 }
 
 function randomNetworkDelay(min = 350, max = 550) {
+  // To simulate a network delay
   const delayMS = Math.floor(Math.random() * (max - min)) + min;
   return delayMS;
 }

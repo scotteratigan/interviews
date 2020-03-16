@@ -37,15 +37,20 @@ function App() {
       method: 'POST',
       body: newInterview,
     });
-    if (res.status === 200) {
-      setInterviews([...res.data]);
-    } else {
-      // Add error msg (toast?)
-    }
-
-    // Assuming confired, get upated transport & location data
+    setInterviews([...res.data]);
     fetchCurrentData();
   };
+
+  const performInterview = async (interviewLocation) => {
+    setLoading(true);
+    const res = await jsonFetch('/api/perform_interview', {
+      method: 'POST',
+      body: { location: interviewLocation },
+    });
+    setInterviews([...res.data]);
+    setLoading(false);
+  };
+
   return (
     <div className="App">
       <h1>Interviews Planner</h1>
@@ -62,7 +67,10 @@ function App() {
           />
         )}
 
-        <Interviews interviews={interviews} />
+        <Interviews
+          interviews={interviews}
+          performInterview={performInterview}
+        />
       </Loader>
     </div>
   );
