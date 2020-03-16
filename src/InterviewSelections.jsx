@@ -36,6 +36,14 @@ export default function SelectInterview({
       .map(({ name }) => name);
   }
 
+  function submitInterview() {
+    addInterview({
+      location,
+      distance: locationDistance,
+      transport,
+    });
+  }
+
   return (
     <form>
       <SelectFromList
@@ -53,7 +61,7 @@ export default function SelectInterview({
         />
       )}
       {location && transport && (
-        <button type="button" onClick={() => addInterview(location, transport)}>
+        <button type="button" onClick={submitInterview}>
           Confirm Interview
         </button>
       )}

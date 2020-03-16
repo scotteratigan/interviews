@@ -5,15 +5,46 @@ import data from '../data.json';
 // max_distance is in miles
 // speed is in miles per hour
 
+let { transportData } = data;
+const { locationData } = data;
+
+const interviews = [];
+
+function scheduleInterview({ location, distance, transport }) {
+  transportData = [...transportData].map((transportOption) => {
+    if (transportOption.name !== transport) return transportOption;
+    return { ...transport, unit: transport.unit - 1 };
+  });
+  interviews.push({ location, distance, transport });
+  return interviews;
+}
+
 function getRouter(route) {
   switch (route) {
     case '/api/transportation':
-      return data.transportData;
+      return transportData;
     case '/api/locations':
-      return data.locationData;
+      return locationData;
     default:
       return {
-        error: 'Route not found',
+        error: 'Get route not found',
+        code: 404,
+      };
+  }
+}
+
+function postRouter(route, body = {}) {
+  switch (route) {
+    case '/api/interview':
+      // todo: implement server-side validation of interview validity
+      // can't schedule multiple per location
+      // can't schedule more than 4 interviews
+      // can't exceed distance by mode of transit
+      // can't use transit too many times
+      return scheduleInterview(body);
+    default:
+      return {
+        error: 'Post route not found',
         code: 404,
       };
   }
@@ -36,10 +67,11 @@ export default function jsonFetch(route, fetchOptions = {}) {
         const returnData = getRouter(route);
         return resolve(returnData);
       }
+      if (options.method === 'POST') {
+        const returnData = postRouter(route, options.body);
+        return resolve(returnData);
+      }
       return reject(new Error('Unknown route requested or server error.'));
-      // resolve(data);
     }, randomNetworkDelay());
   });
 }
-
-// function postRouter(route, body = {}) {}

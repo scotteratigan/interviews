@@ -13,9 +13,14 @@ function App() {
     jsonFetch('/api/transportation').then((res) => setTransportData(res));
     jsonFetch('/api/locations').then((res) => setLocationData(res));
   }, []);
-  const addInterview = (newInterview) => {
-    const newInterviews = [...interviews, newInterview];
-    setInterviews(newInterviews);
+  const addInterview = async (newInterview) => {
+    // const newInterviews = [...interviews, newInterview];
+    const res = await jsonFetch('/api/interview', {
+      method: 'POST',
+      body: newInterview,
+    });
+    console.log('setting interviews to:', res);
+    setInterviews([...res]);
   };
   return (
     <div className="App">
